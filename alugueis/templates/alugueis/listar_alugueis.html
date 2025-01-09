@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Aluguéis{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">Aluguéis Cadastrados</div>
+    <div class="card-body">
+        <ul class="list-group">
+            {% for aluguel in alugueis %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ aluguel.casa.nome }} - {{ aluguel.mes_referencia }} - R$ {{ aluguel.valor_aluguel }}
+                <span class="badge {% if aluguel.pago %}bg-success{% else %}bg-danger{% endif %}">
+                    {% if aluguel.pago %}Pago{% else %}Não Pago{% endif %}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'cadastrar_aluguel' %}" class="btn btn-success mt-3">Cadastrar Novo Aluguel</a>
+    </div>
+</div>
+{% endblock %}

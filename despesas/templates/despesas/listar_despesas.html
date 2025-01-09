@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Despesas Cadastradas{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">Despesas Cadastradas</div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Casa</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Data</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for despesa in despesas %}
+                <tr>
+                    <td>{{ despesa.casa.nome }}</td>
+                    <td>{{ despesa.descricao }}</td>
+                    <td>R$ {{ despesa.valor }}</td>
+                    <td>{{ despesa.data_despesa }}</td>
+                    <td>
+                        <a href="{% url 'editar_despesa' despesa.id %}" class="btn btn-sm btn-success">Editar</a>
+                        <form method="post" action="{% url 'excluir_despesa' despesa.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'cadastrar_despesa' %}" class="btn btn-primary">Cadastrar Nova Despesa</a>
+    </div>
+</div>
+{% endblock %}

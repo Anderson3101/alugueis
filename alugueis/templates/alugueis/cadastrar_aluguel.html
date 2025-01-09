@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load form_extras %}
+
+{% block title %}Cadastrar Novo Aluguel{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white text-center">
+                <h5><i class="fas fa-home"></i> Cadastrar Novo Aluguel</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_casa" class="form-label"><strong>Casa:</strong></label>
+                        {{ form.casa|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_mes_referencia" class="form-label"><strong>Mês de Referência:</strong></label>
+                        {{ form.mes_referencia }}
+                        <small class="form-text text-muted">Selecione a data no calendário.</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_valor_aluguel" class="form-label"><strong>Valor do Aluguel:</strong></label>
+                        {{ form.valor_aluguel|add_class:"form-control" }}
+                        <small class="form-text text-muted">Informe o valor em reais.</small>
+                    </div>
+                    <div class="form-check mb-3">
+                        {{ form.pago|add_class:"form-check-input" }}
+                        <label for="id_pago" class="form-check-label"><strong>Pago</strong></label>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+                        <a href="{% url 'listar_alugueis' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Voltar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

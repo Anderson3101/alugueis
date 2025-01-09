@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Casas Cadastradas{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">Casas Cadastradas</div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for casa in casas %}
+                <tr>
+                    <td>{{ casa.nome }}</td>
+                    <td>{{ casa.endereco }}</td>
+                    <td>
+                        <a href="{% url 'cadastrar_aluguel' %}" class="btn btn-sm btn-outline-primary">Novo Aluguel</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'cadastrar_casa' %}" class="btn btn-success">Cadastrar Nova Casa</a>
+    </div>
+</div>
+{% endblock %}

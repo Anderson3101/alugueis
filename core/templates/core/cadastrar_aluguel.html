@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Cadastrar Aluguel{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">Cadastrar Novo Aluguel</div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success w-100">Salvar</button>
+                </form>
+                <a href="{% url 'listar_alugueis' %}" class="btn btn-secondary w-100 mt-2">Voltar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
