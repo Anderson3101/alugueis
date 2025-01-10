@@ -1,29 +1,43 @@
 {% extends 'base.html' %}
 {% load form_extras %}
 
-{% block title %}Cadastrar Nova Casa{% endblock %}
+{% block title %}Cadastrar Nova Despesa{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center mt-4">
     <div class="col-md-6">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center">
-                <h5>Cadastrar Nova Casa</h5>
+                <h5><i class="fas fa-edit"></i> Cadastrar Nova Despesa</h5>
             </div>
             <div class="card-body">
                 <form method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="id_nome" class="form-label"><strong>Nome:</strong></label>
-                        {{ form.nome|add_class:"form-control" }}
+                        <label for="id_casa" class="form-label"><strong>Casa:</strong></label>
+                        {{ form.casa|add_class:"form-control" }}
                     </div>
                     <div class="mb-3">
-                        <label for="id_endereco" class="form-label"><strong>Endereço:</strong></label>
-                        {{ form.endereco|add_class:"form-control" }}
+                        <label for="id_descricao" class="form-label"><strong>Descrição:</strong></label>
+                        {{ form.descricao|add_class:"form-control" }}
+                    </div>
+                    <div id="kw-fields" class="mb-3" style="display: none;">
+                        <label for="id_kw_inicial" class="form-label"><strong>kW Inicial:</strong></label>
+                        {{ form.kw_inicial|add_class:"form-control" }}
+                        <label for="id_kw_final" class="form-label"><strong>kW Final:</strong></label>
+                        {{ form.kw_final|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_valor" class="form-label"><strong>Valor:</strong></label>
+                        {{ form.valor|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_data_despesa" class="form-label"><strong>Data:</strong></label>
+                        {{ form.data_despesa|add_class:"form-control" }}
                     </div>
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-success">Salvar</button>
-                        <a href="{% url 'listar_casas' %}" class="btn btn-secondary">Voltar</a>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+                        <a href="{% url 'listar_despesas' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Voltar</a>
                     </div>
                 </form>
             </div>
@@ -31,3 +45,21 @@
     </div>
 </div>
 {% endblock %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const descricaoField = document.getElementById("id_descricao");
+        const kwFields = document.getElementById("kw-fields");
+
+        descricaoField.addEventListener("change", function () {
+            if (this.value === "Energia") {
+                kwFields.style.display = "block";
+            } else {
+                kwFields.style.display = "none";
+            }
+        });
+
+        // Trigger the change event on page load
+        descricaoField.dispatchEvent(new Event("change"));
+    });
+</script>

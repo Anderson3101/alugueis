@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'casas',
     'alugueis',
     'financeiro',
-    #'despesas',
+    'despesas',
 ]
 
 MIDDLEWARE = [

@@ -16,8 +16,8 @@ def cadastrar_despesa(request):
         form = DespesaForm()
     return render(request, 'despesas/cadastrar_despesa.html', {'form': form})
 
-def editar_despesa(request, pk):
-    despesa = get_object_or_404(Despesa, pk=pk)
+def editar_despesa(request, id):
+    despesa = get_object_or_404(Despesa, id=id)
     if request.method == 'POST':
         form = DespesaForm(request.POST, instance=despesa)
         if form.is_valid():
@@ -25,7 +25,7 @@ def editar_despesa(request, pk):
             return redirect('listar_despesas')
     else:
         form = DespesaForm(instance=despesa)
-    return render(request, 'despesas/editar_despesa.html', {'form': form, 'despesa': despesa})
+    return render(request, 'despesas/editar_despesa.html', {'form': form})
 
 def excluir_despesa(request, pk):
     despesa = get_object_or_404(Despesa, pk=pk)
