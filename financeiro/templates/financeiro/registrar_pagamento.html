@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Registrar Pagamento - {{ financeiro.casa.nome }}</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="valor" class="form-label">Valor do Pagamento:</label>
+        <input type="number" step="0.01" name="valor" id="valor" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-success">Registrar</button>
+    <a href="{% url 'detalhes_financeiros' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

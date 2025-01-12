@@ -8,3 +8,4 @@ def add_class_casas(field, css_class):
         return field.as_widget(attrs={'class': css_class})
     return field
 
+

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load form_extras %}
+{% load form_extras_despesas %}
 
 {% block title %}Cadastrar Nova Despesa{% endblock %}
 
@@ -15,25 +15,30 @@
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="id_casa" class="form-label"><strong>Casa:</strong></label>
-                        {{ form.casa|add_class:"form-control" }}
+                        {{ form.casa|add_class_despesas:"form-control" }}
                     </div>
                     <div class="mb-3">
                         <label for="id_descricao" class="form-label"><strong>Descrição:</strong></label>
-                        {{ form.descricao|add_class:"form-control" }}
+                        {{ form.descricao|add_class_despesas:"form-control" }}
                     </div>
-                    <div id="kw-fields" class="mb-3" style="display: none;">
-                        <label for="id_kw_inicial" class="form-label"><strong>kW Inicial:</strong></label>
-                        {{ form.kw_inicial|add_class:"form-control" }}
-                        <label for="id_kw_final" class="form-label"><strong>kW Final:</strong></label>
-                        {{ form.kw_final|add_class:"form-control" }}
+                    <!-- Campos adicionais para Energia -->
+                    <div id="energia-fields" style="display: none;">
+                        <div class="mb-3">
+                            <label for="id_kw_inicial" class="form-label"><strong>kW Inicial:</strong></label>
+                            <input type="number" step="0.01" id="id_kw_inicial" class="form-control" placeholder="Digite o kW Inicial">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_kw_final" class="form-label"><strong>kW Final:</strong></label>
+                            <input type="number" step="0.01" id="id_kw_final" class="form-control" placeholder="Digite o kW Final">
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="id_valor" class="form-label"><strong>Valor:</strong></label>
-                        {{ form.valor|add_class:"form-control" }}
+                        <input type="number" step="0.01" id="id_valor" name="valor" class="form-control" placeholder="Digite o valor (opcional)">
                     </div>
                     <div class="mb-3">
                         <label for="id_data_despesa" class="form-label"><strong>Data:</strong></label>
-                        {{ form.data_despesa|add_class:"form-control" }}
+                        {{ form.data_despesa|add_class_despesas:"form-control" }}
                     </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
@@ -44,22 +49,40 @@
         </div>
     </div>
 </div>
-{% endblock %}
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const descricaoField = document.getElementById("id_descricao");
-        const kwFields = document.getElementById("kw-fields");
+        const energiaFields = document.getElementById("energia-fields");
+        const kwInicialField = document.getElementById("id_kw_inicial");
+        const kwFinalField = document.getElementById("id_kw_final");
+        const valorField = document.getElementById("id_valor");
 
+        // Exibir ou ocultar campos de kW com base na descrição selecionada
         descricaoField.addEventListener("change", function () {
-            if (this.value === "Energia") {
-                kwFields.style.display = "block";
+            if (descricaoField.value === "Energia") {
+                energiaFields.style.display = "block";
             } else {
-                kwFields.style.display = "none";
+                energiaFields.style.display = "none";
+                kwInicialField.value = "";
+                kwFinalField.value = "";
             }
         });
 
-        // Trigger the change event on page load
+        // Calcular automaticamente o valor apenas se o campo Valor estiver vazio
+        [kwInicialField, kwFinalField].forEach(field => {
+            field.addEventListener("input", function () {
+                const kwInicial = parseFloat(kwInicialField.value) || 0;
+                const kwFinal = parseFloat(kwFinalField.value) || 0;
+                if (kwFinal > kwInicial && !valorField.value) {
+                    const consumo = kwFinal - kwInicial;
+                    valorField.value = (consumo * 0.80).toFixed(2); // Multiplica por R$ 0,80
+                }
+            });
+        });
+
+        // Trigger inicial para verificar o estado ao carregar a página
         descricaoField.dispatchEvent(new Event("change"));
     });
 </script>
+{% endblock %}

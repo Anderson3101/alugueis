@@ -1,33 +1,29 @@
 {% extends 'base.html' %}
 
-{% block title %}Detalhes Financeiros{% endblock %}
-
 {% block content %}
-<div class="card">
-    <div class="card-header bg-primary text-white">Detalhes Financeiros</div>
-    <div class="card-body">
-        <table class="table table-bordered">
-            <thead class="table-light">
-                <tr>
-                    <th>Casa</th>
-                    <th>Aluguel</th>
-                    <th>Consumo</th>
-                    <th>Total Pago</th>
-                    <th>Pendente</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for financeiro in financeiros %}
-                <tr>
-                    <td>{{ financeiro.aluguel.casa.nome }}</td>
-                    <td>R$ {{ financeiro.aluguel.valor_aluguel }}</td>
-                    <td>R$ {{ financeiro.aluguel.consumo.valor_total }}</td>
-                    <td>R$ {{ financeiro.total_pago }}</td>
-                    <td>R$ {{ financeiro.pendente }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
+<h2>Detalhes Financeiros</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Casa</th>
+            <th>Total a Pagar</th>
+            <th>Total Pago</th>
+            <th>Pendências</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for financeiro in financeiros %}
+        <tr>
+            <td>{{ financeiro.casa.nome }}</td>
+            <td>R$ {{ financeiro.total_a_pagar }}</td>
+            <td>R$ {{ financeiro.total_pago }}</td>
+            <td>R$ {{ financeiro.pendencias }}</td>
+            <td>
+                <a href="{% url 'registrar_pagamento' financeiro.id %}" class="btn btn-primary">Registrar Pagamento</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

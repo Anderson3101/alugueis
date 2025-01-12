@@ -9,24 +9,49 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'listar_casas' %}">Sistema de Aluguéis</a>
+            <a class="navbar-brand" href="{% url 'dashboard' %}">Sistema de Aluguéis</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'listar_casas' %}">Casas</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'listar_alugueis' %}">Aluguéis</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'listar_despesas' %}">Despesas</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'detalhes_financeiros' %}">Financeiro</a></li>
-                    
                 </ul>
             </div>
         </div>
     </nav>
+
     <div class="container mt-4">
+        {% if messages %}
+            <div id="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
         {% block content %}{% endblock %}
     </div>
+
+    <script>
+        // Remove mensagens após 5 segundos
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(() => {
+                const messagesDiv = document.getElementById('messages');
+                if (messagesDiv) {
+                    messagesDiv.style.transition = 'opacity 0.5s ease';
+                    messagesDiv.style.opacity = '0';
+                    setTimeout(() => messagesDiv.remove(), 500); // Remove o elemento após a transição
+                }
+            }, 5000);
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

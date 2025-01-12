@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% load form_extras %}
+{% load form_extras_alugueis %}
+
 
 {% block title %}Cadastrar Novo Aluguel{% endblock %}
 
@@ -15,7 +16,7 @@
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="id_casa" class="form-label"><strong>Casa:</strong></label>
-                        {{ form.casa|add_class:"form-control" }}
+                        {{ form.casa|add_class_alugueis:"form-control" }}
                     </div>
                     <div class="mb-3">
                         <label for="id_mes_referencia" class="form-label"><strong>Mês de Referência:</strong></label>
@@ -25,11 +26,11 @@
                     
                     <div class="mb-3">
                         <label for="id_valor_aluguel" class="form-label"><strong>Valor do Aluguel:</strong></label>
-                        {{ form.valor_aluguel|add_class:"form-control" }}
+                        {{ form.valor_aluguel|add_class_alugueis:"form-control" }}
                         <small class="form-text text-muted">Informe o valor em reais.</small>
                     </div>
                     <div class="form-check mb-3">
-                        {{ form.pago|add_class:"form-check-input" }}
+                        {{ form.pago|add_class_alugueis:"form-check-input" }}
                         <label for="id_pago" class="form-check-label"><strong>Pago</strong></label>
                     </div>
                     <div class="d-grid gap-2">

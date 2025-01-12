@@ -9,10 +9,18 @@
         <ul class="list-group">
             {% for aluguel in alugueis %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{ aluguel.casa.nome }} - {{ aluguel.mes_referencia }} - R$ {{ aluguel.valor_aluguel }}
-                <span class="badge {% if aluguel.pago %}bg-success{% else %}bg-danger{% endif %}">
-                    {% if aluguel.pago %}Pago{% else %}Não Pago{% endif %}
-                </span>
+                <div>
+                    <strong>{{ aluguel.casa.nome }}</strong> - {{ aluguel.mes_referencia }} - R$ {{ aluguel.valor_aluguel }}
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="badge {% if aluguel.pago %}bg-success{% else %}bg-danger{% endif %} me-3">
+                        {% if aluguel.pago %}Pago{% else %}Não Pago{% endif %}
+                    </span>
+                    {% if not aluguel.pago %}
+                    <a href="{% url 'registrar_pagamento' aluguel.id %}" class="btn btn-sm btn-primary me-2">Baixa Total</a>
+                    <a href="{% url 'registrar_pagamento_parcial' aluguel.id %}" class="btn btn-sm btn-warning">Baixa Parcial</a>
+                    {% endif %}
+                </div>
             </li>
             {% endfor %}
         </ul>

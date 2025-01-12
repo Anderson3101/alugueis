@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load form_extras %}
+{% load form_extras_despesas %}
 
 {% block title %}Editar Despesa{% endblock %}
 
@@ -11,29 +11,30 @@
                 <h5><i class="fas fa-edit"></i> Editar Despesa</h5>
             </div>
             <div class="card-body">
-                <form method="post" id="despesa-form">
+                <form method="post">
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="id_casa" class="form-label"><strong>Casa:</strong></label>
-                        {{ form.casa|add_class:"form-control" }}
+                        {{ form.casa|add_class_despesas:"form-control" }}
                     </div>
                     <div class="mb-3">
                         <label for="id_descricao" class="form-label"><strong>Descrição:</strong></label>
-                        {{ form.descricao|add_class:"form-control" }}
+                        {{ form.descricao|add_class_despesas:"form-control" }}
                     </div>
-                    <div id="energia-fields" style="display: none;">
-                        <div class="mb-3">
-                            <label for="id_kw_inicial" class="form-label"><strong>kW Inicial:</strong></label>
-                            {{ form.kw_inicial|add_class:"form-control" }}
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_kw_final" class="form-label"><strong>kW Final:</strong></label>
-                            {{ form.kw_final|add_class:"form-control" }}
-                        </div>
+                    <!-- Campos adicionais para Energia -->
+                    <div id="kw-fields" class="mb-3" style="display: none;">
+                        <label for="id_kw_inicial" class="form-label"><strong>kW Inicial:</strong></label>
+                        {{ form.kw_inicial|add_class_despesas:"form-control" }}
+                        <label for="id_kw_final" class="form-label"><strong>kW Final:</strong></label>
+                        {{ form.kw_final|add_class_despesas:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_valor" class="form-label"><strong>Valor:</strong></label>
+                        {{ form.valor|add_class_despesas:"form-control" }}
                     </div>
                     <div class="mb-3">
                         <label for="id_data_despesa" class="form-label"><strong>Data:</strong></label>
-                        {{ form.data_despesa|add_class:"form-control" }}
+                        {{ form.data_despesa|add_class_despesas:"form-control" }}
                     </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
@@ -44,22 +45,13 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const descricaoField = document.querySelector('#id_descricao');
-        const energiaFields = document.querySelector('#energia-fields');
+    document.addEventListener("DOMContentLoaded", function () {
+        const descricaoField = document.getElementById("id_descricao");
+        const kwFields = document.getElementById("kw-fields");
 
-        function toggleEnergiaFields() {
-            if (descricaoField.value === 'Energia') {
-                energiaFields.style.display = 'block';
-            } else {
-                energiaFields.style.display = 'none';
-            }
-        }
-
-        descricaoField.addEventListener('change', toggleEnergiaFields);
-        toggleEnergiaFields();
-    });
-</script>
-{% endblock %}
+        descricaoField.addEventListener("change", function () {
+            if (this.value === "Energia") {
+                kwFields.style

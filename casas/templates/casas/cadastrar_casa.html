@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% load form_extras %}
+{% load form_extras_casas %}
+
 
 {% block title %}Cadastrar Nova Casa{% endblock %}
 
@@ -15,11 +16,11 @@
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="id_nome" class="form-label"><strong>Nome:</strong></label>
-                        {{ form.nome|add_class:"form-control" }}
+                        {{ form.nome|add_class_casas:"form-control" }}
                     </div>
                     <div class="mb-3">
                         <label for="id_endereco" class="form-label"><strong>Endereço:</strong></label>
-                        {{ form.endereco|add_class:"form-control" }}
+                        {{ form.endereco|add_class_casas:"form-control" }}
                     </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-success">Salvar</button>

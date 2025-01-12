@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Casas</h5>
+                    <p class="card-text display-4">{{ total_casas }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Aluguéis</h5>
+                    <p class="card-text display-4">{{ total_alugueis }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Despesas</h5>
+                    <p class="card-text display-4">{{ total_despesas }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Pago</h5>
+                    <p class="card-text display-4">R$ {{ total_pago|floatformat:2 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pendências</h5>
+                    <p class="card-text display-4">R$ {{ total_pendente|floatformat:2 }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Despesas Financeiras</h5>
+                    <p class="card-text display-4">R$ {{ total_despesas_fin|floatformat:2 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
